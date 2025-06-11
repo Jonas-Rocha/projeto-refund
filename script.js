@@ -38,6 +38,8 @@ form.onsubmit = (event) => {
     expense: expense.value,
     category_id: category.value,
     category_name: category.options[category.selectedIndex].text,
+    /*OBS: o [category.selectedIndex] só é assim pois "selectedIndex" é uma prop do elemento <select>
+    por isso precisamos referenciar o category antes. */
     amount: amount.value,
     created_at: new Date(),
   };
@@ -78,8 +80,14 @@ function expenseAdd(newExpense) {
       .toUpperCase()
       .replace("R$", "")}`;
 
+    // Cria o ícone de remover
+    const removeIcon = document.createElement("img");
+    removeIcon.classList.add("remove-icon");
+    removeIcon.setAttribute("src", "img/remove.svg");
+    removeIcon.setAttribute("alt", "remover");
+
     // Adiciona as informações no item.
-    expenseItem.append(expenseIcon, expenseInfo, expenseAmount);
+    expenseItem.append(expenseIcon, expenseInfo, expenseAmount, removeIcon);
 
     // Adiciona o item na lista.
     expenseList.append(expenseItem);
