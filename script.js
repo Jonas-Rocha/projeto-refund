@@ -123,7 +123,7 @@ function updateTotals() {
 
       // Remover caracteres não numéricos e substitui a vírgula pelo ponto.
       let value = itemAmount.textContent
-        .replace(/[^\d]/g, "")
+        .replace(/[^\d,]/g, "")
         .replace(",", ".");
 
       // Converte o valor para float.
@@ -139,9 +139,28 @@ function updateTotals() {
       total += Number(value);
     }
 
-    expensesTotal.textContent = total;
+    // Cria a span para adicionar o R$ formatado.
+    const symbolBRL = document.createElement("small");
+    symbolBRL.textContent = "R$";
+
+    total = formatCurrencyBRL(total).toUpperCase().replace("R$", "");
+    // Limpa o conteúdo do elemento
+    expensesTotal.innerHTML = "";
+
+    // Adiciona o símbolo da moeda e o valor total formatado.
+    expensesTotal.append(symbolBRL, total);
   } catch (error) {
     console.log(error);
     alert("Não foi possivel atualizar os totais.");
   }
 }
+
+// Evento que captura o clique nos itens da lista.
+
+expenseList.addEventListener("click", function (event) {
+  // Verifica se o elemento clickado é o ícone de remover.
+  // console.log(event); esse console junto com o "event" é bom para entender onde está os elementos clickados.
+  if (event.target.classList.contains("remove-icon")) {
+    console.log(event);
+  }
+});
